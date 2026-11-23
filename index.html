@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080611">
+  <meta name="description" content="SOLO API — powerful AI services and developer tools, built for creators.">
+  <title>SOLO API — More Power. More Possibilities.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080611;
+      --panel: rgba(18, 12, 31, .78);
+      --panel-2: rgba(23, 14, 42, .88);
+      --purple: #a855f7;
+      --purple-2: #7c3aed;
+      --pink: #e879f9;
+      --text: #f7f2ff;
+      --muted: #b9adc9;
+      --line: rgba(168, 85, 247, .32);
+      --green: #22e88a;
+      --shadow: 0 0 32px rgba(124, 58, 237, .17);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--text); background:
+        radial-gradient(ellipse at 15% 0%, rgba(91, 33, 182, .2), transparent 38%),
+        radial-gradient(ellipse at 90% 30%, rgba(126, 34, 206, .12), transparent 35%),
+        var(--bg);
+      font-family: Inter, system-ui, sans-serif; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .grid-bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .13;
+      background-image: linear-gradient(rgba(168,85,247,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,.12) 1px, transparent 1px);
+      background-size: 54px 54px; mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+    .topline { height: 2px; background: linear-gradient(90deg, transparent, var(--purple), var(--pink), var(--purple), transparent); box-shadow: 0 0 18px var(--purple); }
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(18px);
+      background: rgba(8, 6, 17, .82); border-bottom: 1px solid rgba(168,85,247,.22);
+    }
+    .nav { max-width: 1240px; margin: auto; padding: 16px 26px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-family: Orbitron, sans-serif; font-weight: 900; letter-spacing: -1.5px; font-size: 23px; white-space: nowrap; }
+    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; color: #d8a5ff; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(145deg, rgba(168,85,247,.28), rgba(30,15,50,.3)); box-shadow: 0 0 22px rgba(168,85,247,.2); font-size: 20px; }
+    .brand span span { color: var(--purple); }
+    .nav-links { display: flex; align-items: center; gap: 7px; }
+    .nav-links a { color: var(--muted); padding: 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; transition: .2s; }
+    .nav-links a:hover, .nav-links a.active { color: white; background: rgba(124,58,237,.22); }
+    .status-pill { display: flex; align-items: center; gap: 9px; border: 1px solid rgba(34,232,138,.38); color: var(--green); padding: 9px 13px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 12px #fbbf24; }
+    .hero { max-width: 1240px; margin: auto; padding: 48px 26px 24px; }
+    .hero-visual {
+      min-height: 490px; border: 1px solid rgba(168,85,247,.36); border-radius: 28px; overflow: hidden; position: relative;
+      background: linear-gradient(90deg, rgba(8,6,17,.96) 0%, rgba(8,6,17,.87) 35%, rgba(8,6,17,.12) 76%), url('./solo-hero.png') center 38% / cover no-repeat;
+      box-shadow: 0 20px 70px rgba(0,0,0,.38), 0 0 42px rgba(124,58,237,.14);
+    }
+    .hero-visual:after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background: linear-gradient(0deg, rgba(8,6,17,.8), transparent 30%, transparent 78%, rgba(8,6,17,.12)); }
+    .hero-content { position: relative; z-index: 1; width: min(620px, 65%); padding: 76px 0 68px 58px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: #d8a5ff; text-transform: uppercase; letter-spacing: 3px; font-size: 11px; font-weight: 900; }
+    .eyebrow:before { content:""; width: 28px; height: 2px; background: var(--pink); box-shadow: 0 0 12px var(--pink); }
+    h1 { margin: 20px 0 12px; font-family: Orbitron, Inter, sans-serif; font-size: clamp(48px, 7vw, 86px); line-height: .98; letter-spacing: -5px; font-weight: 900; }
+    h1 span { color: var(--purple); text-shadow: 0 0 34px rgba(168,85,247,.5); }
+    .tagline { font-size: clamp(18px, 2.2vw, 25px); font-weight: 800; margin: 0 0 15px; }
+    .tagline em { color: #c084fc; font-style: normal; }
+    .hero-copy { max-width: 490px; color: #d0c5df; line-height: 1.8; font-size: 15px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 19px; border-radius: 13px; border: 1px solid var(--line); font-weight: 800; font-size: 13px; transition: transform .2s, box-shadow .2s, background .2s; cursor: pointer; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(124,58,237,.25); }
+    .btn-primary { color: white; background: linear-gradient(110deg, #7c3aed, #a855f7); border-color: #c084fc; box-shadow: 0 0 24px rgba(124,58,237,.35); }
+    .btn-secondary { background: rgba(9,7,17,.6); color: #eadcff; }
+    .section { max-width: 1240px; margin: auto; padding: 30px 26px; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:20px; }
+    .kicker { color: var(--purple); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 900; }
+    h2 { margin: 7px 0 0; font-family: Orbitron, sans-serif; font-size: clamp(22px, 3vw, 30px); letter-spacing: -1px; }
+    .section-note { color: var(--muted); font-size: 12px; }
+    .features { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .card { position:relative; overflow:hidden; padding:22px; border-radius:19px; border:1px solid var(--line); background:linear-gradient(145deg, rgba(24,15,41,.9), rgba(12,9,22,.88)); box-shadow:var(--shadow); transition:.25s; }
+    .card:hover { transform:translateY(-5px); border-color:rgba(216,165,255,.7); box-shadow:0 16px 42px rgba(124,58,237,.18); }
+    .card:before { content:""; position:absolute; width:110px; height:110px; right:-55px; top:-55px; border-radius:50%; background:rgba(168,85,247,.12); filter:blur(8px); }
+    .feature-icon { width:46px; height:46px; border-radius:14px; display:grid; place-items:center; font-size:22px; color:#e9c8ff; background:rgba(124,58,237,.2); border:1px solid rgba(168,85,247,.35); }
+    .card h3 { margin:17px 0 8px; font-size:15px; }
+    .card p { margin:0; color:var(--muted); font-size:12px; line-height:1.75; }
+    .lower { display:grid; grid-template-columns:1.35fr 1fr; gap:15px; }
+    .status-panel, .quick-panel { border:1px solid var(--line); border-radius:20px; padding:22px; background:var(--panel); box-shadow:var(--shadow); }
+    .panel-title { display:flex; align-items:center; gap:10px; font-weight:900; margin-bottom:18px; }
+    .panel-title .accent { color:var(--purple); font-size:20px; }
+    .status-main { display:flex; align-items:center; gap:14px; padding:12px 0 18px; }
+    .status-light { width:13px; height:13px; border-radius:50%; background:#fbbf24; box-shadow:0 0 18px rgba(251,191,36,.7); }
+    .status-main strong { font-size:22px; }
+    .status-main p { margin:4px 0 0; color:var(--muted); font-size:12px; }
+    .status-caption { color:#fcd34d; font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; }
+    .metrics { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); padding-top:17px; gap:12px; }
+    .metric { border-right:1px solid var(--line); padding-right:12px; }
+    .metric:last-child { border:0; }
+    .metric b { display:block; color:#d8a5ff; font-size:12px; margin-bottom:5px; }
+    .metric span { color:var(--muted); font-size:11px; }
+    .quick-links { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+    .quick-link { min-height:78px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; border:1px solid rgba(168,85,247,.25); background:rgba(124,58,237,.09); border-radius:14px; color:#e8d7ff; font-size:11px; font-weight:800; transition:.2s; }
+    .quick-link:hover { background:rgba(124,58,237,.23); border-color:var(--purple); transform:translateY(-3px); }
+    .quick-link span { font-size:20px; }
+    .docs { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    .codebox { border:1px solid var(--line); background:#07050d; border-radius:17px; overflow:hidden; }
+    .code-head { padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(168,85,247,.2); color:var(--muted); font-size:11px; }
+    .lights { display:flex; gap:5px; }
+    .lights i { width:7px; height:7px; border-radius:50%; background:#7c3aed; }
+    pre { margin:0; padding:18px; overflow:auto; color:#d8b4fe; font:12px/1.8 ui-monospace, SFMono-Regular, Menlo, monospace; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .doc-copy { border:1px solid var(--line); background:var(--panel); border-radius:17px; padding:22px; }
+    .doc-copy h3 { margin:0 0 10px; }
+    .doc-copy p { color:var(--muted); font-size:13px; line-height:1.8; }
+    .endpoint { display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:rgba(124,58,237,.12); border:1px solid rgba(168,85,247,.25); border-radius:10px; padding:10px 12px; font:11px ui-monospace, monospace; color:#e9d5ff; overflow-wrap:anywhere; }
+    .endpoint button { margin-left:auto; border:0; background:transparent; color:#d8a5ff; cursor:pointer; font-weight:900; }
+    footer { margin-top:35px; border-top:1px solid rgba(168,85,247,.32); background:rgba(5,4,11,.75); }
+    .footer-inner { max-width:1240px; margin:auto; padding:25px 26px; display:flex; justify-content:space-between; align-items:center; gap:20px; color:var(--muted); font-size:11px; }
+    .footer-brand { color:white; font-family:Orbitron,sans-serif; font-weight:900; font-size:14px; }
+    .quote { color:#dfc8fa; font-style:italic; font-size:14px; text-align:center; }
+    .toast { position:fixed; bottom:22px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#211333; border:1px solid var(--purple); color:white; padding:11px 16px; border-radius:12px; font-size:12px; box-shadow:var(--shadow); transition:.25s; z-index:50; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    @media (max-width:900px) {
+      .features { grid-template-columns:repeat(2,1fr); }
+      .hero-content { width:72%; padding-left:35px; }
+      .lower { grid-template-columns:1fr; }
+      .nav-links { gap:0; }
+      .nav-links a { padding:9px; }
+      .status-pill { display:none; }
+    }
+    @media (max-width:620px) {
+      .nav { padding:13px 16px; }
+      .brand { font-size:18px; }
+      .brand-mark { width:33px; height:33px; }
+      .nav-links { display:none; }
+      .hero { padding:22px 14px 12px; }
+      .hero-visual { min-height:570px; background-position:61% center; }
+      .hero-visual:before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(8,6,17,.94),rgba(8,6,17,.64) 65%,rgba(8,6,17,.3)); }
+      .hero-content { width:100%; padding:52px 24px 35px; }
+      h1 { font-size:53px; letter-spacing:-3px; }
+      .hero-copy { font-size:13px; }
+      .section { padding:23px 14px; }
+      .features { grid-template-columns:1fr; }
+      .section-head { align-items:start; flex-direction:column; }
+      .metrics { grid-template-columns:1fr; }
+      .metric { border-right:0; border-bottom:1px solid var(--line); padding:0 0 10px; }
+      .metric:last-child { border:0; }
+      .quick-links { grid-template-columns:repeat(3,1fr); }
+      .docs { grid-template-columns:1fr; }
+      .footer-inner { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="topline"></div>
+  <header>
+    <nav class="nav">
+      <a class="brand" href="#home" aria-label="SOLO API home">
+        <span class="brand-mark">♛</span><span>SOLO <span>API</span></span>
+      </a>
+      <div class="nav-links">
+        <a class="active" href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#docs">Docs</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="status-pill"><span class="status-dot"></span> PREVIEW MODE</div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-visual">
+        <div class="hero-content">
+          <div class="eyebrow">The ultimate API for developers</div>
+          <h1>SOLO <span>API</span></h1>
+          <p class="tagline">More <em>Power.</em> More <em>Possibilities.</em></p>
+          <p class="hero-copy">A developer-focused API project bringing AI-powered services, smart utilities, and useful tools together in one place. Built to help creators move faster and build bigger.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#services">✦ Explore Services <span>→</span></a>
+            <a class="btn btn-secondary" href="#docs">⌘ Quick Start</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section-head">
+        <div><div class="kicker">What powers SOLO</div><h2>Built for what comes next.</h2></div>
+        <div class="section-note">One project. Multiple possibilities.</div>
+      </div>
+      <div class="features">
+        <article class="card"><div class="feature-icon">✧</div><h3>AI Services</h3><p>AI-focused endpoints designed to bring intelligent capabilities into your apps and workflows.</p></article>
+        <article class="card"><div class="feature-icon">⌘</div><h3>Developer Tools</h3><p>Practical utilities and API building blocks for developers, creators, and automation projects.</p></article>
+        <article class="card"><div class="feature-icon">ϟ</div><h3>Simple Integration</h3><p>A clear API-first approach, with straightforward endpoints and a consistent developer experience.</p></article>
+        <article class="card"><div class="feature-icon">⬡</div><h3>Built to Expand</h3><p>A growing foundation designed to support new services, features, and integrations over time.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="lower">
+        <div class="status-panel">
+          <div class="panel-title"><span class="accent">⌁</span> Project Status</div>
+          <div class="status-main">
+            <span class="status-light"></span>
+            <div><strong>Website Preview</strong><p>Public project page is being prepared. API deployment status is not verified here.</p></div>
+          </div>
+          <div class="status-caption">Live API status will appear after deployment and monitoring setup.</div>
+          <div class="metrics">
+            <div class="metric"><b>Project</b><span>SOLO API</span></div>
+            <div class="metric"><b>Platform</b><span>Node.js</span></div>
+            <div class="metric"><b>Access</b><span>Developer-focused</span></div>
+          </div>
+        </div>
+        <div class="quick-panel">
+          <div class="panel-title"><span class="accent">↗</span> Quick Links</div>
+          <div class="quick-links">
+            <a class="quick-link" href="https://github.com/loay-7s" target="_blank" rel="noopener"><span>⌘</span>GitHub</a>
+            <a class="quick-link" href="#docs"><span>▤</span>Quick Start</a>
+            <a class="quick-link" href="mailto:solo@gmail.com"><span>✉</span>Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="docs">
+      <div class="section-head">
+        <div><div class="kicker">Developer corner</div><h2>Start with the endpoint.</h2></div>
+        <div class="section-note">API base URL — planned domain</div>
+      </div>
+      <div class="docs">
+        <div class="doc-copy">
+          <h3>One base. Many possibilities.</h3>
+          <p>When the API is deployed and the domain is connected, use the base URL below as the starting point for your integrations. Individual routes and request formats will be documented as they are finalized.</p>
+          <div class="endpoint"><span id="endpoint">https://loay-solo.is-a.dev/api/</span><button type="button" id="copyBtn">COPY</button></div>
+        </div>
+        <div class="codebox">
+          <div class="code-head"><span>QUICK START · JAVASCRIPT</span><span class="lights"><i></i><i></i><i></i></span></div>
+          <pre><code>const API_BASE =
+  'https://loay-solo.is-a.dev/api/';
+
+// Add your endpoint after deployment.
+// Check the official docs for each route.</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><div class="footer-brand">♛ SOLO API</div><div>© <span id="year"></span> SOLO Project. All rights reserved.</div></div>
+      <div class="quote">“ Dream Big. Build Bigger. ”</div>
+      <div>Built with purpose for developers.</div>
+    </div>
+  </footer>
+  <div class="toast" id="toast">Copied to clipboard</div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const copyBtn = document.getElementById('copyBtn');
+    const toast = document.getElementById('toast');
+    copyBtn.addEventListener('click', async () => {
+      const value = document.getElementById('endpoint').textContent.trim();
+      try {
+        await navigator.clipboard.writeText(value);
+        toast.textContent = 'API base URL copied';
+      } catch {
+        toast.textContent = value;
+      }
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    });
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+          }
+        });
+      }, { rootMargin: '-35% 0px -55% 0px' });
+      sections.forEach(section => observer.observe(section));
+    }
+  </script>
+</body>
+</html>
